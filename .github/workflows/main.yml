@@ -1,4 +1,4 @@
-name: Build Castel APK
+name: Build Castel Android APK
 
 on:
   push:
@@ -12,22 +12,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Install Dependencies & Capacitor
         run: |
           npm install
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npx cap init Castel com.castel.app --web-dir .
+          npx cap add android
 
-      - name: Build web assets
+      - name: Build Android APK
         run: |
-          npm run build
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Castel-v1.0-debug-apk
-          path: dist/
+          name: Castel-v1.0-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+
 
