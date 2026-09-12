@@ -1,0 +1,15 @@
+{
+  "name": "castel-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "mkdir -p dist && cp index.html dist/"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/android": "^6.0.0"
+  }
+}
